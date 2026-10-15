@@ -1,0 +1,848 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PulseLogix | Transparent Hyper-Local Logistics SaaS</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #d32f2f;
+      --primary-hover: #b71c1c;
+      --primary-light: #ffebee;
+      --accent: #f97316;
+      --dark: #0f172a;
+      --slate: #334155;
+      --muted: #64748b;
+      --light-bg: #f8fafc;
+      --white: #ffffff;
+      --card-border: #e2e8f0;
+      --radius: 12px;
+      --shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.08), 0 8px 10px -6px rgba(15, 23, 42, 0.04);
+      --font-body: 'Plus Jakarta Sans', sans-serif;
+      --font-display: 'Space Grotesk', sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: var(--font-body);
+      color: var(--dark);
+      background-color: var(--light-bg);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* Navbar */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--card-border);
+    }
+
+    .nav-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 1rem 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+    }
+
+    .logo-badge {
+      width: 40px;
+      height: 40px;
+      border-radius: 8px;
+      background: var(--primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--white);
+      font-weight: 800;
+      font-size: 1.2rem;
+      box-shadow: 0 4px 10px rgba(211, 47, 47, 0.3);
+    }
+
+    .brand-text {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 1.35rem;
+      color: var(--dark);
+      letter-spacing: -0.5px;
+    }
+
+    .brand-text span {
+      color: var(--primary);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 1.5rem;
+      align-items: center;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: var(--slate);
+      font-weight: 500;
+      font-size: 0.95rem;
+      transition: color 0.2s ease;
+    }
+
+    .nav-links a:hover {
+      color: var(--primary);
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.65rem 1.25rem;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 0.95rem;
+      cursor: pointer;
+      border: none;
+      transition: all 0.2s ease;
+      text-decoration: none;
+    }
+
+    .btn-primary {
+      background: var(--primary);
+      color: var(--white);
+      box-shadow: 0 4px 12px rgba(211, 47, 47, 0.25);
+    }
+
+    .btn-primary:hover {
+      background: var(--primary-hover);
+      transform: translateY(-1px);
+    }
+
+    .btn-outline {
+      background: transparent;
+      color: var(--slate);
+      border: 1px solid var(--card-border);
+    }
+
+    .btn-outline:hover {
+      background: #f1f5f9;
+      color: var(--dark);
+    }
+
+    /* Hero Section */
+    .hero {
+      padding: 4.5rem 1.5rem 3rem;
+      max-width: 1200px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .badge-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 14px;
+      border-radius: 50px;
+      background: var(--primary-light);
+      color: var(--primary);
+      font-weight: 600;
+      font-size: 0.85rem;
+      margin-bottom: 1.5rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .hero h1 {
+      font-family: var(--font-display);
+      font-size: clamp(2.3rem, 5vw, 3.8rem);
+      font-weight: 700;
+      line-height: 1.15;
+      color: var(--dark);
+      max-width: 900px;
+      margin: 0 auto 1.5rem;
+    }
+
+    .hero h1 span {
+      background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .hero p {
+      font-size: 1.15rem;
+      color: var(--muted);
+      max-width: 680px;
+      margin: 0 auto 2.5rem;
+    }
+
+    .hero-actions {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+      margin-bottom: 3.5rem;
+    }
+
+    /* Metrics Bar */
+    .metrics-bar {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1.5rem;
+      background: var(--white);
+      padding: 2rem;
+      border-radius: var(--radius);
+      border: 1px solid var(--card-border);
+      box-shadow: var(--shadow);
+      margin-bottom: 4rem;
+    }
+
+    .metric-item {
+      text-align: center;
+    }
+
+    .metric-item .val {
+      font-family: var(--font-display);
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--primary);
+    }
+
+    .metric-item .lbl {
+      font-size: 0.85rem;
+      color: var(--muted);
+      margin-top: 4px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    /* Live Interactive Dispatch Portal */
+    .portal-section {
+      max-width: 1200px;
+      margin: 0 auto 5rem;
+      padding: 0 1.5rem;
+    }
+
+    .section-title {
+      text-align: center;
+      margin-bottom: 2.5rem;
+    }
+
+    .section-title h2 {
+      font-family: var(--font-display);
+      font-size: 2.2rem;
+      color: var(--dark);
+      margin-bottom: 0.5rem;
+    }
+
+    .section-title p {
+      color: var(--muted);
+      font-size: 1.05rem;
+    }
+
+    .portal-card {
+      background: var(--white);
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      display: grid;
+      grid-template-columns: 1.1fr 1fr;
+      overflow: hidden;
+    }
+
+    @media (max-width: 900px) {
+      .portal-card {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .portal-sidebar {
+      padding: 2rem;
+      border-right: 1px solid var(--card-border);
+      background: #fafafa;
+    }
+
+    .portal-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--card-border);
+      padding-bottom: 1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .portal-header h3 {
+      font-family: var(--font-display);
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--dark);
+    }
+
+    .calc-form {
+      display: flex;
+      flex-direction: column;
+      gap: 1.2rem;
+    }
+
+    .form-group label {
+      display: block;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--slate);
+      margin-bottom: 0.4rem;
+    }
+
+    .form-group input, .form-group select {
+      width: 100%;
+      padding: 0.75rem 1rem;
+      border-radius: 8px;
+      border: 1px solid var(--card-border);
+      background: var(--white);
+      font-size: 0.95rem;
+      color: var(--dark);
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .form-group input:focus, .form-group select:focus {
+      border-color: var(--primary);
+    }
+
+    .price-display-box {
+      background: var(--primary-light);
+      border: 1px solid #ffcdd2;
+      border-radius: 8px;
+      padding: 1.2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 0.5rem;
+    }
+
+    .price-display-box .title {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--primary);
+      text-transform: uppercase;
+    }
+
+    .price-display-box .amount {
+      font-family: var(--font-display);
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: var(--primary);
+    }
+
+    .portal-main {
+      padding: 2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .telemetry-card {
+      background: #0f172a;
+      border-radius: 10px;
+      padding: 1.25rem;
+      color: var(--white);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .telemetry-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1rem;
+    }
+
+    .telemetry-header span {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: #4ade80;
+    }
+
+    .pulse-dot {
+      width: 8px;
+      height: 8px;
+      background: #4ade80;
+      border-radius: 50%;
+      box-shadow: 0 0 8px #4ade80;
+      animation: pulse 1.5s infinite;
+    }
+
+    @keyframes pulse {
+      0% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.4; transform: scale(1.3); }
+      100% { opacity: 1; transform: scale(1); }
+    }
+
+    /* Simulated Map View */
+    .map-container {
+      height: 180px;
+      background: #1e293b;
+      border-radius: 8px;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid #334155;
+      overflow: hidden;
+    }
+
+    .grid-lines {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background-size: 25px 25px;
+      background-image: 
+        linear-gradient(to right, rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+    }
+
+    .rider-icon {
+      position: absolute;
+      width: 32px;
+      height: 32px;
+      background: var(--accent);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--white);
+      font-size: 0.9rem;
+      box-shadow: 0 0 15px rgba(249, 115, 22, 0.6);
+      transition: all 0.8s ease;
+    }
+
+    .destination-pin {
+      position: absolute;
+      top: 30%;
+      right: 25%;
+      color: #ef4444;
+      font-size: 1.4rem;
+    }
+
+    .telemetry-stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin-top: 1rem;
+      border-top: 1px solid #334155;
+      padding-top: 0.8rem;
+    }
+
+    .telemetry-stats div span {
+      display: block;
+      font-size: 0.75rem;
+      color: #94a3b8;
+    }
+
+    .telemetry-stats div strong {
+      font-size: 0.95rem;
+      color: #f8fafc;
+    }
+
+    .orders-section h4 {
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: var(--muted);
+      margin-bottom: 0.8rem;
+    }
+
+    .order-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.9rem 1rem;
+      background: #f8fafc;
+      border: 1px solid var(--card-border);
+      border-radius: 8px;
+      margin-bottom: 0.6rem;
+    }
+
+    .order-status {
+      padding: 4px 10px;
+      border-radius: 50px;
+      font-size: 0.75rem;
+      font-weight: 700;
+    }
+
+    .status-transit {
+      background: #dcfce7;
+      color: #15803d;
+    }
+
+    .status-pending {
+      background: #fef3c7;
+      color: #b45309;
+    }
+
+    /* Comparison Section */
+    .comparison-section {
+      padding: 4rem 1.5rem;
+      background: var(--white);
+      border-top: 1px solid var(--card-border);
+      border-bottom: 1px solid var(--card-border);
+    }
+
+    .comp-container {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .comp-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+      margin-top: 2.5rem;
+    }
+
+    @media (max-width: 768px) {
+      .comp-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .comp-card {
+      padding: 2rem;
+      border-radius: var(--radius);
+      border: 1px solid var(--card-border);
+    }
+
+    .comp-bad {
+      background: #fff5f5;
+      border-color: #fecaca;
+    }
+
+    .comp-good {
+      background: #f0fdf4;
+      border-color: #bbf7d0;
+      position: relative;
+    }
+
+    .comp-card h3 {
+      font-size: 1.25rem;
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .comp-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.8rem;
+    }
+
+    .comp-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      font-size: 0.95rem;
+    }
+
+    /* Pricing Section */
+    .pricing-section {
+      padding: 5rem 1.5rem;
+      max-width: 1100px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+      margin-top: 3rem;
+      text-align: left;
+    }
+
+    .pricing-card {
+      background: var(--white);
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius);
+      padding: 2.5rem;
+      box-shadow: var(--shadow);
+      position: relative;
+    }
+
+    .pricing-card.featured {
+      border: 2px solid var(--primary);
+    }
+
+    .badge-featured {
+      position: absolute;
+      top: -12px;
+      right: 24px;
+      background: var(--primary);
+      color: var(--white);
+      padding: 4px 12px;
+      border-radius: 50px;
+      font-size: 0.75rem;
+      font-weight: 700;
+    }
+
+    .price-num {
+      font-family: var(--font-display);
+      font-size: 2.8rem;
+      font-weight: 700;
+      color: var(--dark);
+      margin: 1rem 0;
+    }
+
+    .price-num span {
+      font-size: 1rem;
+      color: var(--muted);
+      font-weight: 400;
+    }
+
+    .features-list {
+      list-style: none;
+      margin: 2rem 0;
+      display: flex;
+      flex-direction: column;
+      gap: 0.8rem;
+    }
+
+    .features-list li {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 0.95rem;
+      color: var(--slate);
+    }
+
+    /* Team Section */
+    .team-section {
+      background: #f1f5f9;
+      padding: 4.5rem 1.5rem;
+      text-align: center;
+    }
+
+    .team-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 2rem;
+      max-width: 1000px;
+      margin: 3rem auto 0;
+    }
+
+    .team-card {
+      background: var(--white);
+      padding: 2rem;
+      border-radius: var(--radius);
+      border: 1px solid var(--card-border);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+    }
+
+    .avatar-placeholder {
+      width: 72px;
+      height: 72px;
+      border-radius: 50%;
+      background: var(--primary-light);
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin: 0 auto 1.2rem;
+    }
+
+    .team-card h4 {
+      font-size: 1.15rem;
+      color: var(--dark);
+      margin-bottom: 0.2rem;
+    }
+
+    .team-card p.role {
+      color: var(--primary);
+      font-weight: 600;
+      font-size: 0.85rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .team-card p.school {
+      color: var(--muted);
+      font-size: 0.8rem;
+    }
+
+    /* Footer */
+    footer {
+      background: var(--dark);
+      color: #94a3b8;
+      padding: 3rem 1.5rem 2rem;
+      font-size: 0.9rem;
+    }
+
+    .footer-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 2rem;
+      border-bottom: 1px solid #1e293b;
+      padding-bottom: 2rem;
+    }
+
+    .footer-col h4 {
+      color: var(--white);
+      font-size: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    .footer-col ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .footer-col a {
+      color: #94a3b8;
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .footer-col a:hover {
+      color: var(--white);
+    }
+
+    .footer-bottom {
+      max-width: 1200px;
+      margin: 1.5rem auto 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+      font-size: 0.8rem;
+    }
+
+    /* Toast Notification */
+    #toast {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      background: #0f172a;
+      color: #fff;
+      padding: 12px 20px;
+      border-radius: 8px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+      font-size: 0.9rem;
+      display: none;
+      z-index: 1000;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation -->
+  <header>
+    <div class="nav-container">
+      <a href="#" class="brand">
+        <div class="logo-badge">P</div>
+        <div class="brand-text">Pulse<span>Logix</span></div>
+      </a>
+      <nav class="nav-links">
+        <a href="#dispatch">Dispatch Portal</a>
+        <a href="#comparison">Why Us</a>
+        <a href="#pricing">Pricing</a>
+        <a href="#team">Team</a>
+        <a href="#dispatch" class="btn btn-primary">Launch App</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="badge-tag">Wadhwani Foundation &bull; ISA Venture Acceleration</div>
+    <h1>Predictable Flat-Rate Delivery.<br><span>Zero Commission Traps.</span></h1>
+    <p>A transparent logistics SaaS platform engineered for independent urban merchants. Eliminate unfair cuts, optimize local routes, and empower your customer base with real-time GPS telemetry.</p>
+    <div class="hero-actions">
+      <a href="#dispatch" class="btn btn-primary" style="padding: 0.85rem 1.8rem; font-size: 1.05rem;">Open Dispatch Portal</a>
+      <a href="#pricing" class="btn btn-outline" style="padding: 0.85rem 1.8rem; font-size: 1.05rem;">View Subscription Plans</a>
+    </div>
+
+    <!-- Metrics Bar -->
+    <div class="metrics-bar">
+      <div class="metric-item">
+        <div class="val">86.66%</div>
+        <div class="lbl">Venture Viability Index</div>
+      </div>
+      <div class="metric-item">
+        <div class="val">30%</div>
+        <div class="lbl">Logistics Cost Savings</div>
+      </div>
+      <div class="metric-item">
+        <div class="val">&le; 7 Mins</div>
+        <div class="lbl">Avg. Local Dispatch ETA</div>
+      </div>
+      <div class="metric-item">
+        <div class="val">&#8377;0</div>
+        <div class="lbl">Hidden Commission Fees</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Interactive Dispatch Demo Section -->
+  <section class="portal-section" id="dispatch">
+    <div class="section-title">
+      <h2>Merchant Dispatch Portal</h2>
+      <p>Test the transparent flat-rate calculator and inspect simulated live fleet telemetry</p>
+    </div>
+
+    <div class="portal-card">
+      <!-- Left: Pricing Calculator -->
+      <div class="portal-sidebar">
+        <div class="portal-header">
+          <h3>1. Calculate Delivery Cost</h3>
+          <span style="font-size: 0.75rem; background: #e0f2fe; color: #0284c7; padding: 4px 8px; border-radius: 4px; font-weight: 600;">Active Route</span>
+        </div>
+
+        <form class="calc-form" id="quoteForm" onsubmit="event.preventDefault(); bookRider();">
+          <div class="form-group">
+            <label>Pickup Location</label>
+            <input type="text" id="pickup" value="Aliya's Boutique (Bazaar Street)" required>
+          </div>
+
+          <div class="form-group">
+            <label>Drop Address</label>
+            <input type="text" id="drop" value="Sector 4, Green Garden Apts" required>
+          </div>
+
+          <div class="form-group">
+            <label>Select Package Size / Fleet Type</label>
+            <select id="packageType" onchange="calculateRate()">
+              <option value="small" selected>Small Parcel / Bike (&le; 5 kg)</option>
+              <option value="medium">Medium Box / EV Scooter (&le; 15 kg)</option>
+              <option value="bulk">Bulk Batch / Cargo Auto (&le; 50 kg)</option>
+            </select>
+          </div>
+
+          <div class="price-display-box">
+            <div>
+              <div class="title">Estimated Flat Rate</div>
+              <small style="color: var(--muted); font-size: 0.75rem;">No surge &bull; Zero comm
